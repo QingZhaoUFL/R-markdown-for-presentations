@@ -1,0 +1,358 @@
+---
+title: "Introduction to Computer Programming with R (FOR 6934)"
+author: 
+- "Qing Zhao (School of Forest Resources & Conservation, qing.zhao@ufl.edu)"
+- "Daijiang Li (Department of Wildlife Ecology & Conservation, dli1@ufl.edu)"
+- "Denis Valle (School of Forest Resources & Conservation, drvalle@ufl.edu)"
+output:
+  ioslides_presentation:
+    widescreen: true
+    smaller: false
+    css: myStyle.css
+---
+
+## Basic Information
+- Self introduction
+- Why use R
+    - Free
+    - Powerful (and fast growing)
+    - Programming skills are transferable
+- Structure of lectures
+- Homework and grading
+- Office hour
+
+## Learning outcomes
+- Data type and index
+- Loops
+- Customized functions
+- Figures & tables
+- Enjoy computer programming
+
+## Class one 
+- help() and several other basic functions
+- Understand data types and structures
+- Convert data types and structures
+
+
+
+## help() function
+- You can learn to use all of the functions in R by using help() function
+- You can also use the help() function to learn about data sets and packages
+- Use it to explore the infinite potential of R
+
+
+- Other <b>useful</b> functions
+    - str()
+    - apropos()
+
+## Sample code
+Use help() to understand functions
+```{r, eval=F}
+help(mean)
+help(apply)
+help(ifelse)
+```
+
+## Sample code
+? is the same as help()
+```{r, eval=F}
+help(sum)
+?sum
+```
+
+## Sample code
+Use help() to understand control-flow constructs
+```{r, eval=F}
+help("if")
+help("else")
+help("for")
+```
+
+## Sample code
+Use help() to understand data sets and packages
+```{r, eval=F}
+help(cars)
+help(package="boot")
+```
+
+## Sample code
+str() and apropos()
+```{r}
+str(mean)
+apropos("mean")
+```
+
+## Data types
+Data type           Example             
+------------------- --------------------
+Logical             TRUE (T), FALSE (F)  
+Numeric (double)    4, 3.5, 1e2          
+Integer             2L, 1e2L             
+Complex             5+3i                 
+Character           "Tom", "1.2", "FALSE" 
+
+## Data structures
+Data structure Explanation 
+-------------- -----------
+Vector         A set of values of a single type
+Matrix         A two-dimensional rectangular data set of a single type of data
+Array          A multiple dimensional data set of a single type of data
+Data frame     A number of vectors of equal length (like a matrix). Each vector (column, also called variable) can have a different data type
+List           An R object containing different types of data, functions, and even another list
+
+## Sample code
+Create vectors with logical values
+```{r}
+c(TRUE, TRUE, FALSE)
+```
+
+## Sample code
+Create vectors with numeric & integer values
+```{r}
+c(5.2, 3.3, 4.9, 6.4, 8.1)
+c(1L, 2L, 3L)
+1:3
+```
+
+## Sample code
+Create vectors with character values
+```{r}
+c("red", "blue", "pink")
+c("3.2", "1.5", "7.3")
+c("TRUE", "FALSE")
+```
+
+## Sample code
+Vectors do not allow for mixed types of values
+```{r}
+c(FALSE, 1.52, -2L, TRUE)
+c(FALSE, 1.52, -2L, TRUE, 'a')
+```
+
+## Sample code
+Name vectors
+```{r}
+a <- c(3.52, 5.73, 4.83)
+a
+
+b = c(TRUE, FALSE, TRUE, FALSE)
+b
+
+c <- c("a", "b", "c") # '' also works, pick your style
+c
+```
+
+## Sample code
+Create and name matrices
+```{r}
+mat1 <- matrix(c("dog", "cat", "horse", "gator"), ncol=2, nrow=2, byrow=FALSE)
+mat1
+mat2 <- matrix(c("dog", "cat", "horse", "gator"), ncol=2, nrow=2, byrow=TRUE)
+mat2
+```
+
+## Sample code
+Create and name arrays
+```{r}
+arr <- array(1:30, dim=c(3,5,2))
+arr
+```
+
+## Sample code
+Create and name data frames
+```{r}
+animal <- c('dog', 'cat', 'horse', 'tortoise')
+age <- c(15, 1, 3, 100)
+large <- c(FALSE, FALSE, TRUE, TRUE)
+dat <- data.frame(animal, age, large)
+dat
+```
+
+## Sample code
+Create and name lists
+```{r}
+animal <- c('dog', 'cat')
+age <- c(15, 1)
+dat <- data.frame(animal, age)
+lst <- list(animal=animal, age=age, dat=dat)
+lst
+```
+
+## Functions for identifying data types and structures
+- class()
+- typeof()
+- str()
+
+## Functions for specific data types
+- is.logical()
+- is.numeric()
+- is.integer()
+- is.character()
+
+## Functions for specific data structures
+- is.vector()
+- is.matrix()
+- is.array()
+- is.data.frame()
+- is.list()
+
+## Sample code
+Identify data types and structure in vectors
+```{r}
+a <- c(3.25, 6.73, 5.5)
+class(a)
+typeof(a)
+str(a)
+```
+
+## Sample code
+Identify specific data types in vectors
+```{r}
+is.numeric(a)
+is.character(a)
+```
+
+## Sample code
+Identify specific data structures in vectors
+```{r}
+is.vector(a)
+is.matrix(a)
+```
+
+## Sample code
+Identify data types and structures in matrices
+```{r}
+b <- matrix(c('dog', 'cat', 'horse', 'gator'), nrow=2, ncol=2)
+class(b)
+typeof(b)
+str(b)
+```
+
+## Sample code
+Identify specific data types in matrices
+```{r}
+is.character(b)
+is.logical(b)
+```
+
+## Sample code
+Identify specific data structures in matrices
+```{r}
+is.data.frame(b)
+is.matrix(b)
+```
+
+## Sample code
+Identify data structures in data frames and lists
+```{r}
+dat <- data.frame(animal=c('dog', 'cat'), age=c(15,1))
+lst <- list(dat, fruit=c('apple', 'peach'))
+
+class(dat)
+class(lst)
+```
+
+## Some comments for data types and structures
+- Always use class() to identify data structures first. It will give you the data type if it is a vector, or the data structure otherwise
+- If it is a matrix or array, use typeof() to identify the data type in it
+- typeof() does not make much sense for data frames and lists, since they allow multiple types of data
+- Use class() and typeof() on the columns in a data frame or components in a list
+
+## Functions for converting data types
+- as.logical()
+- as.numeric()
+- as.integer()
+- as.character()
+
+## Functions for converting data structures
+- as.vector()
+- as.matrix()
+- as.data.frame()
+
+## Sample code
+Convert data to logical values
+```{r}
+as.logical(c(1.5, -2.2, 1000, 0))
+as.logical(c(1L, 0L, 5e2L, -3L))
+as.logical(c('a', 'b', 'c'))
+```
+
+## Sample code
+Convert data to numeric values
+```{r}
+as.numeric(c(TRUE, TRUE, FALSE, TRUE))
+as.numeric(c('dog', 'cat', 'horse'))
+as.numeric(c('7.1', '-3.5', '1.2'))
+```
+
+## Sample code
+Convert data to integer values
+```{r}
+as.integer(c(31.2, 43.9, -22.76))
+as.integer(c(FALSE, TRUE))
+```
+
+## Sample code
+Nested converting
+```{r}
+as.logical(c('1.5','0.0','-3.2'))
+as.logical(as.numeric(c('1.5','0.0','-3.2')))
+```
+
+## Sample code
+Convert data to character values
+```{r}
+as.character(c(TRUE,FALSE,TRUE))
+as.character(c(1.5, 2.2, 7.6))
+as.character(c(5L, 22L))
+```
+
+## Sample code
+Convert matrices to vectors
+```{r}
+mat <- matrix(1:9, nrow=3, ncol=3)
+mat
+as.vector(mat)
+```
+
+## Sample code
+Convert vectors to a matrices
+```{r}
+vec <- c(1, 3, 5, 7, 9, 11)
+vec
+as.matrix(vec)
+```
+
+## Sample code
+Convert vectors to a matrices, cont'd
+```{r}
+vec <- c(1, 3, 5, 7, 9, 11)
+vec
+matrix(vec, nrow=2, ncol=3)
+```
+
+## Sample code
+Convert matrices to data frames
+```{r}
+mat <- matrix(1:12, ncol=6, nrow=2)
+mat
+as.data.frame(mat)
+```
+
+## Summary
+- Use help() and several other functions to learn about functions and data sets
+- Understand data types and structures
+- Convert data types and structures
+- Learn by practicing
+
+## Thank you and see you next class
+
+
+      
+
+
+
+
+
+
+
